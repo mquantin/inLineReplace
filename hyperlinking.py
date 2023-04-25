@@ -5,8 +5,9 @@ from termcolor import colored, cprint
 filePaths = []
 classDict = {}
 
+folderPath = "/home/me/Documents/folder"
 
-for root, dirs, files in os.walk("/home/matthieu/Documents/taf_notSync/dev/documentation-cnd3d/doc-CND3D/docs"):
+for root, dirs, files in os.walk(folderPath):
     for name in files:
         if name.endswith('.md'):
             filePaths.append(os.path.join(root, name))
@@ -25,7 +26,7 @@ for filePath in filePaths:
         lines = fileR.readlines()
     with open(filePath, 'w') as fileW:
         for line in lines:
-            if not re.match("#", line):
+            if not re.match("#", line):# regex is more simple with this exception (titles)
                 for match in re.findall(r"(?<=`)\w+(?=`)", line):
                     targetFileName = classDict.get(match.lower())
                     cprint('\t'+line.strip(), "grey")
